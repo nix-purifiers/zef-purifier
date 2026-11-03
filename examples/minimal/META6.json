@@ -1,0 +1,19 @@
+{
+  "meta-version": 1,
+  "name": "Purifier::Example",
+  "version": "0.1.0",
+  "auth": "github:nix-purifiers",
+  "api": "1",
+  "description": "Locked Raku dependency example",
+  "license": "MIT",
+  "provides": {
+    "Purifier::Example": "lib/Purifier/Example.rakumod"
+  },
+  "depends": [
+    "JSON::Marshal"
+  ],
+  "test-depends": [
+    "Test",
+    "JSON::Fast"
+  ]
+}

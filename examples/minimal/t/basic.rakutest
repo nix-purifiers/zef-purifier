@@ -1,0 +1,5 @@
+use Test;
+use JSON::Fast;
+use Purifier::Example;
+is from-json(serialized())<answer>,42,"locked JSON round trip";
+done-testing;

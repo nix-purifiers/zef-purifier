@@ -1,0 +1,7 @@
+result*
+.zef-purifier/
+.precomp/
+__pycache__/
+*.pyc
+sdk
+*.log

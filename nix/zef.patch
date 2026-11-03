@@ -1,0 +1,82 @@
+--- a/lib/Zef/Client.rakumod
++++ b/lib/Zef/Client.rakumod
+@@ -1,4 +1,5 @@
+ use v6.d;
++use nqp;
+ use Zef:ver($?DISTRIBUTION.meta<version> // $?DISTRIBUTION.meta<ver>// '*'):api($?DISTRIBUTION.meta<api> // '*'):auth($?DISTRIBUTION.meta<auth> // '');
+ use Zef::Distribution:ver(Zef.^ver):api(Zef.^api):auth(Zef.^auth);
+ use Zef::Distribution::Local:ver(Zef.^ver):api(Zef.^api):auth(Zef.^auth);
+@@ -370,6 +371,7 @@
+     #| between later calls to .find-prereq-candidates(...) (which calls !find-candidates
+     #| so it doesn't send the aforementioned logging message for a top level request).
+     method !find-candidates(Bool :$upgrade, *@identities ($, *@) --> Array[Candidate]) {
++        die "Dependency is absent from the purified repository; update the lock" if %*ENV<ZEF_PURIFIER_FROZEN>;
+         my Candidate @candidates = $!recommendation-manager.candidates(@identities, :$upgrade)\
+             .grep(-> $candi { not @!exclude.first({$candi.dist.contains-spec($_)}) })\
+             .grep(-> $candi { not @!ignore.first({$candi.dist.contains-spec($_)}) })\
+@@ -581,6 +583,17 @@
+                 });
+             }
+ 
++            if %*ENV<ZEF_PURIFIER_CAPTURE> && $save-to.IO.f {
++                my $root = (%*ENV<ZEF_PURIFIER_CAPTURE> ~ '.archives').IO;
++                $root.mkdir unless $root.e;
++                my $key = nqp::sha1(~$candi.uri ~ "|" ~ $candi.as);
++                $save-to.IO.copy($root.child($key ~ '.archive'));
++                spurt $root.child($key ~ '.json'), Zef::to-json({
++                    identity => ~$candi.dist.identity, request => $candi.as,
++                    url => ~$candi.uri, file => $key ~ '.archive',
++                    filename => ~$save-to.IO.basename
++                });
++            }
+             $candi.uri = $save-to;
+ 
+             $candi;
+@@ -1005,6 +1018,17 @@
+         # Setup(?) Phase:
+         # Attach appropriate metadata so we can do --dry runs using -I/some/dep/path
+         # and can install after we know they pass any required tests
++        if %*ENV<ZEF_PURIFIER_CAPTURE> {
++            my @records = @sorted-candidates.map: -> $candi {
++                my $meta = $candi.dist.IO.child('META6.json');
++                $meta = $candi.dist.IO.child('META.info') unless $meta.e;
++                { identity => ~$candi.dist.identity, request => $candi.as,
++                  directory => ~$candi.dist.path,
++                  meta => Zef::from-json($meta.slurp) }
++            };
++            spurt %*ENV<ZEF_PURIFIER_CAPTURE>, Zef::to-json(@records);
++            return Array[Candidate].new(@sorted-candidates);
++        }
+         my @linked-candidates = self.link-candidates(@sorted-candidates);
+         die "Something went terribly wrong linking the distributions" unless +@linked-candidates;
+ 
+--- a/lib/Zef/CLI.rakumod
++++ b/lib/Zef/CLI.rakumod
+@@ -421,15 +421,23 @@
+         Int  :$test-degree    = %*ENV<ZEF_TEST_DEGREE>  || $degree || 1,
+         Bool :$precompile-install = True,
+         Bool :$dry,
+-        Bool :$upgrade,
+-        Bool :$deps-only,
++        Bool :$upgrade is copy,
++        Bool :$deps-only is copy,
+         Bool :$serial,
+-        Bool :$contained,
+-        :$update,
++        Bool :$contained is copy,
++        :$update is copy,
+         :$exclude,
+         :to(:$install-to) = %*ENV<ZEF_INSTALL_TO> || $CONFIG<DefaultCUR>,
+         *@wants ($, *@)
+     ) {
++        if %*ENV<ZEF_PURIFIER_FROZEN> {
++            die "Locked sessions support install .; edit META6.json and relock to add dependencies"
++                unless @wants.elems == 1 && @wants[0] eq '.';
++            $deps-only = True;
++            $contained = False;
++            $update = False;
++            $upgrade = False;
++        }
+         @wants = @wants.map({ $_ eq '-' ?? $*IN.lines.Slip !! $_ }).unique;
+ 
+         @wants .= map: *.&str2identity;

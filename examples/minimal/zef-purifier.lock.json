@@ -1,0 +1,197 @@
+{
+  "distributions": [
+    {
+      "identity": "JSON::Fast:ver<0.21.0>:auth<zef:timo>",
+      "meta": {
+        "auth": "zef:timo",
+        "authors": [
+          "Timo Paulssen",
+          "Tony O'Dell",
+          "Wenzel P. P. Peppmeyer",
+          "Elizabeth Mattijsen"
+        ],
+        "build-depends": [],
+        "depends": [],
+        "description": "A naive, fast json parser and serializer; drop-in replacement for JSON::Tiny",
+        "license": "Artistic-2.0",
+        "meta6": "0",
+        "name": "JSON::Fast",
+        "perl": "6.*",
+        "provides": {
+          "JSON::Fast": "lib/JSON/Fast.pm6"
+        },
+        "resources": [],
+        "source-url": "https://github.com/timo/json_fast.git",
+        "support": {
+          "source": "git://github.com/timo/json_fast.git"
+        },
+        "tags": [],
+        "test-depends": [
+          "Test"
+        ],
+        "version": "0.21.0"
+      },
+      "path": "archives/0000.tar.gz",
+      "request": "JSON::Fast"
+    },
+    {
+      "identity": "JSON::OptIn:ver<0.0.2>:auth<zef:jonathanstowe>",
+      "meta": {
+        "auth": "zef:jonathanstowe",
+        "authors": [
+          "Jonathan Stowe <jns+gh@gellyfish.co.uk>"
+        ],
+        "build-depends": [],
+        "depends": [],
+        "description": "Provide a trait and role to identify opt-in JSON serialization",
+        "license": "Artistic-2.0",
+        "meta-version": "1",
+        "name": "JSON::OptIn",
+        "provides": {
+          "JSON::OptIn": "lib/JSON/OptIn.rakumod"
+        },
+        "raku": "6.d",
+        "resources": [],
+        "source-url": "https://github.com/jonathanstowe/JSON-OptIn.git",
+        "support": {
+          "bugtracker": "https://github.com/jonathanstowe/JSON-OptIn/issues",
+          "email": "jns+gh@gellyfish.co.uk",
+          "source": "https://github.com/jonathanstowe/JSON-OptIn.git"
+        },
+        "tags": [
+          "json",
+          "serialization",
+          "opt-in"
+        ],
+        "test-depends": [],
+        "version": "0.0.2"
+      },
+      "path": "archives/0001.tar.gz",
+      "request": "JSON::OptIn"
+    },
+    {
+      "identity": "JSON::Name:ver<0.0.7>:auth<zef:jonathanstowe>:api<1.0>",
+      "meta": {
+        "api": "1.0",
+        "auth": "zef:jonathanstowe",
+        "author": "Jonathan Stowe <jns+git@gellyfish.co.uk>",
+        "authors": [
+          "Jonathan Stowe <jns+git@gellyfish.co.uk>"
+        ],
+        "build-depends": [],
+        "depends": [
+          "JSON::OptIn"
+        ],
+        "description": "Provides a trait to store an alternative JSON Name",
+        "license": "Artistic-2.0",
+        "meta-version": "1",
+        "name": "JSON::Name",
+        "provides": {
+          "JSON::Name": "lib/JSON/Name.rakumod"
+        },
+        "raku": "6.*",
+        "resources": [],
+        "source-url": "git://github.com/jonathanstowe/JSON-Name.git",
+        "support": {
+          "bugtracker": "https://github.com/jonathanstowe/JSON-Name/issues",
+          "source": "git://github.com/jonathanstowe/JSON-Name.git"
+        },
+        "tags": [
+          "object",
+          "serialisation",
+          "JSON"
+        ],
+        "test-depends": [
+          "Test"
+        ],
+        "version": "0.0.7"
+      },
+      "path": "archives/0002.tar.gz",
+      "request": "JSON::Name:ver<0.0.6+>"
+    },
+    {
+      "identity": "JSON::Marshal:ver<0.0.25>:auth<zef:jonathanstowe>:api<1.0>",
+      "meta": {
+        "api": "1.0",
+        "auth": "zef:jonathanstowe",
+        "author": "Jonathan Stowe <jns+git@gellyfish.co.uk>",
+        "authors": [
+          "Jonathan Stowe <jns+git@gellyfish.co.uk>"
+        ],
+        "build-depends": [],
+        "depends": [
+          "JSON::Fast:ver<0.16+>",
+          "JSON::Name:ver<0.0.6+>",
+          "JSON::OptIn"
+        ],
+        "description": "Simple serialisation of objects to JSON",
+        "license": "Artistic-2.0",
+        "meta-version": "1",
+        "name": "JSON::Marshal",
+        "provides": {
+          "JSON::Marshal": "lib/JSON/Marshal.rakumod"
+        },
+        "raku": "6.*",
+        "resources": [],
+        "source-url": "https://github.com/jonathanstowe/JSON-Marshal.git",
+        "support": {
+          "bugtracker": "https://github.com/jonathanstowe/JSON-Marshal/issues",
+          "email": "jns+git@gellyfish.co.uk",
+          "source": "https://github.com/jonathanstowe/JSON-Marshal.git"
+        },
+        "tags": [
+          "object",
+          "serialisation",
+          "JSON"
+        ],
+        "test-depends": [
+          "Test",
+          "JSON::Fast:ver<0.16+>"
+        ],
+        "version": "0.0.25"
+      },
+      "path": "archives/0003.tar.gz",
+      "request": "JSON::Marshal"
+    }
+  ],
+  "entries": [
+    {
+      "hash": "sha256-pxM5qdW3ToeB3Z2qWheq/Q+09X2uSP6aUNlo8jmdv+E=",
+      "mirrors": [],
+      "path": "archives/0000.tar.gz",
+      "url": "https://360.zef.pm/J/SO/JSON_FAST/7e7f535b21ee660a228640394ddd1f2a5209a063.tar.gz"
+    },
+    {
+      "hash": "sha256-1h7vO/20OIUSydUDk/hhGOtT4pUJMlNsWT4c/zmwRv8=",
+      "mirrors": [],
+      "path": "archives/0001.tar.gz",
+      "url": "https://360.zef.pm/J/SO/JSON_OPTIN/7ada0a9b952ab007f75f64afbf576183e4030264.tar.gz"
+    },
+    {
+      "hash": "sha256-8agkIS0VtOCIk1kMdJeIdJf3mFo3yHS5wTmdKQFcYBk=",
+      "mirrors": [],
+      "path": "archives/0002.tar.gz",
+      "url": "https://360.zef.pm/J/SO/JSON_NAME/d7486670f476871c83d6dbc2c87f665b69d484ab.tar.gz"
+    },
+    {
+      "hash": "sha256-BguRTeP+/RkCSrEHkiNTU4nZ79ySrkyvW9vPp+fpqWQ=",
+      "mirrors": [],
+      "path": "archives/0003.tar.gz",
+      "url": "https://360.zef.pm/J/SO/JSON_MARSHAL/e622954e9ded2f92966827ea2aedd2a3fd4e925d.tar.gz"
+    }
+  ],
+  "inputs": {
+    "META6.json": {
+      "content": "{\n  \"meta-version\": 1,\n  \"name\": \"Purifier::Example\",\n  \"version\": \"0.1.0\",\n  \"auth\": \"github:nix-purifiers\",\n  \"api\": \"1\",\n  \"description\": \"Locked Raku dependency example\",\n  \"license\": \"MIT\",\n  \"provides\": {\n    \"Purifier::Example\": \"lib/Purifier/Example.rakumod\"\n  },\n  \"depends\": [\n    \"JSON::Marshal\"\n  ],\n  \"test-depends\": [\n    \"Test\",\n    \"JSON::Fast\"\n  ]\n}\n",
+      "sha256": "4e0aff60274d370ba1c77453586093192c0277d6b6438c7f49e04dfd719fc996"
+    }
+  },
+  "purifier": "zef",
+  "toolVersions": {
+    "gcc": "16.2.0",
+    "rakudo": "2026.07",
+    "sdk": "ca8db54fd582d7525f622dba3a80f7bd96f97992b48afa91ddd2ce549bfcfe4c",
+    "zef": "1.1.3"
+  },
+  "version": 1
+}
