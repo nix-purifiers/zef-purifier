@@ -14,8 +14,8 @@ let
     src = /. + project;
     lockFile = /. + companion;
   };
-  lock = import ./read-lock.nix { inherit (pkgs) lib; } args;
-  packages = pkgs.callPackage ./build-project.nix {
+  lock = import ../lib-overlays/default/read-lock.nix { inherit (pkgs) lib; } args;
+  packages = pkgs.callPackage ../pkgs/build-zef-project/default.nix {
     inherit
       purifier
       nativeZef
@@ -25,7 +25,7 @@ let
   } args;
 in
 if target == "environment" then
-  pkgs.callPackage ./environment.nix {
+  pkgs.callPackage ../pkgs/build-zef-project/environment.nix {
     inherit
       purifier
       nativeZef
