@@ -17,12 +17,12 @@
 stdenvNoCC.mkDerivation {
   pname = "zef-purifier";
   version = "0.1.0";
-  src = ../.;
+  src = ../..;
   nativeBuildInputs = [ makeWrapper ];
   dontBuild = true;
   installPhase = ''
     mkdir -p "$out/bin" "$out/lib/zef-purifier"
-    cp -r zef_purifier nix "$out/lib/zef-purifier/"
+    cp -r zef_purifier nix lib-overlays pkgs "$out/lib/zef-purifier/"
     install -m755 bin/zef-purifier "$out/bin/zef-purifier"
     substituteInPlace "$out/lib/zef-purifier/nix/realize.nix" \
       --replace-fail '@nixpkgs@' '${nixpkgsSrc}' \
