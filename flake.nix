@@ -22,11 +22,11 @@
           nativeZef = scope.callPackage ./nix/zef.nix { };
           toolchain = scope.callPackage ./nix/toolchain.nix { };
           sdkVersion = import ./nix/sdk-version.nix { nixpkgsSrc = nixpkgs; };
-          cli = scope.callPackage ./nix/cli.nix {
+          cli = scope.callPackage ./pkgs/zef-purifier/default.nix {
             nixpkgsSrc = nixpkgs;
             purifierSrc = purifier;
           };
-          buildZefProject = scope.callPackage ./nix/build-project.nix {
+          buildZefProject = scope.callPackage ./pkgs/build-zef-project/default.nix {
             purifier = import (purifier + "/nix/lib") { inherit (final) lib; };
           };
         });
@@ -45,7 +45,7 @@
         cli = self.packages.${system}.default;
         sdk = (pkgsFor system).zef-purifier.toolchain;
       });
-      lib.zef-purifier.readLock = import ./nix/read-lock.nix { lib = nixpkgs.lib; };
+      lib.zef-purifier = import ./lib-overlays/default { lib = nixpkgs.lib; };
       apps = forAll (system: {
         default = {
           type = "app";

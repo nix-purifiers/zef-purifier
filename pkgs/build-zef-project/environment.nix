@@ -61,8 +61,8 @@ runCommand "purified-zef-environment"
     ''}
     export RAKUDOLIB="inst#$out/repo"
     raku -e 'say Rakudo::Internals::JSON.to-json(CompUnit::RepositoryRegistry.repository-for-spec(%*ENV<RAKUDOLIB>).installed.grep(*.defined).map(*.meta).grep(*.defined).Array)' > "$TMPDIR/installed.json"
-    python3 ${../zef_purifier/check-installed.py} ${manifest} "$TMPDIR/installed.json"
-    raku ${./warm.raku} ${manifest}
+    python3 ${../../zef_purifier/check-installed.py} ${manifest} "$TMPDIR/installed.json"
+    raku ${../../nix/warm.raku} ${manifest}
     cp ${manifest} "$out/capture.json"
     ln -s ${sources} "$out/sources"
   ''
