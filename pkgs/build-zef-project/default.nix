@@ -106,7 +106,6 @@ let
         ${
           if installCommand == null then
             ''
-              cp -r lib META6.json "$out/"
               ${python3}/bin/python3 ${./install-resources.py} "$PWD" "$out" "$TMPDIR/zef-native-metadata.json"
             ''
           else

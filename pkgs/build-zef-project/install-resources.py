@@ -7,6 +7,9 @@ import sys
 source, destination, metadata = map(Path, sys.argv[1:])
 root = source.resolve()
 meta = json.loads(metadata.read_text())
+shutil.copytree(source / "lib", destination / "lib", dirs_exist_ok=True,
+                ignore=shutil.ignore_patterns(".precomp"))
+shutil.copy2(source / "META6.json", destination / "META6.json")
 for logical, physical in meta.get("files", {}).items():
     if not logical.startswith("resources/"):
         continue

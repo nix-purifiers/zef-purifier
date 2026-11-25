@@ -7,6 +7,9 @@ also copies resources declared by the native SDK. `Distribution::Path` supplies
 the resource mapping, including platform library names. Resource names and
 source metadata are preserved. An explicit `installCommand` keeps its existing
 custom behavior.
+Development `.precomp` caches are excluded from the source library installation;
+their repository identifiers are local cache state. Native resource bytes and
+file modes are preserved.
 
 Opt in to native resource projections with explicit selectors:
 
