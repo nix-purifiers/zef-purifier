@@ -60,6 +60,12 @@
         in
         {
           inherit (build.packages) environment project;
+          native = import ./tests/native-products.nix { pkgs = pkgsFor system; };
+          native-revision = import ./tests/native-products.nix {
+            pkgs = pkgsFor system;
+            src = ./tests/fixtures/native-revision;
+            expected = 42;
+          };
           release = build.release;
           cli = self.packages.${system}.default;
         }

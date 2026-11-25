@@ -1,0 +1,20 @@
+{
+  "meta-version": 1,
+  "name": "Purifier::NativeResource",
+  "version": "0.1.0",
+  "auth": "github:nix-purifiers",
+  "api": "1",
+  "description": "Native resource feasibility fixture",
+  "license": "MIT",
+  "provides": {
+    "Purifier::NativeResource": "lib/Purifier/NativeResource.rakumod"
+  },
+  "resources": [
+    "libraries/native-answer",
+    "include/native-answer.h",
+    "data/message.txt"
+  ],
+  "depends": [],
+  "build-depends": [],
+  "test-depends": []
+}
