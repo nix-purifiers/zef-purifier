@@ -33,6 +33,7 @@ pkgs.runCommand "zef-native-resource-consumers"
     mkdir -p "$HOME" "$out"
     raku -I${producer}/lib -e 'use Purifier::NativeResource; for 0..99 -> $value { die "installed NativeCall" unless answer($value)==$value+${toString expected} }; die "overflow" unless answer(0xffffffff)==${toString (expected - 1)}; say "Actual installed Zef NativeCall100/overflow PASS"'
     test "$(cat ${producer}/resources/data/message.txt)" = 'native resource preserved'
+    test -x ${producer}/resources/libraries/libnative-answer.so
     python ${./native-consumers.py} ${projection} ${toString expected}
     cc ${./native-consumer.c} -DEXPECTED=${toString expected} \
       -I${producer}/resources/include ${producer}/resources/libraries/libnative-answer.so -o consume

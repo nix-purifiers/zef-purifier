@@ -94,11 +94,15 @@ let
         cp -pr ${source}/. work/
         chmod -R u+w work
         cd work
-        cmp META6.json ${capturedMeta}
+        ${lib.optionalString (installCommand == null || nativeLibraries != { }) ''
+          cmp META6.json ${capturedMeta}
+        ''}
         ${buildCommand}
         ${lib.optionalString doCheck checkCommand}
-        cmp META6.json ${capturedMeta}
-        ${rakudo}/bin/raku -Iinst#${nativeZef} ${./resource-metadata.raku} "$PWD" > "$TMPDIR/zef-native-metadata.json"
+        ${lib.optionalString (installCommand == null || nativeLibraries != { }) ''
+          cmp META6.json ${capturedMeta}
+          ${rakudo}/bin/raku -Iinst#${nativeZef} ${./resource-metadata.raku} "$PWD" > "$TMPDIR/zef-native-metadata.json"
+        ''}
         ${
           if installCommand == null then
             ''

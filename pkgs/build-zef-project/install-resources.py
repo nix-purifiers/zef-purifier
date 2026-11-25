@@ -17,5 +17,6 @@ for logical, physical in meta.get("files", {}).items():
     assert original.is_relative_to(root) and original.is_file(), physical
     output = destination / physical
     output.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(original, output)
+    shutil.copy2(original, output)
     assert output.read_bytes() == original.read_bytes(), physical
+    assert output.stat().st_mode & 0o777 == original.stat().st_mode & 0o777, physical
