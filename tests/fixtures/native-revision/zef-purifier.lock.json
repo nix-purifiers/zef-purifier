@@ -1,0 +1,18 @@
+{
+  "distributions": [],
+  "entries": [],
+  "inputs": {
+    "META6.json": {
+      "content": "{\n  \"meta-version\": 1,\n  \"name\": \"Purifier::NativeResource\",\n  \"version\": \"0.1.0\",\n  \"auth\": \"github:nix-purifiers\",\n  \"api\": \"1\",\n  \"description\": \"Native resource feasibility fixture\",\n  \"license\": \"MIT\",\n  \"provides\": {\n    \"Purifier::NativeResource\": \"lib/Purifier/NativeResource.rakumod\"\n  },\n  \"resources\": [\n    \"libraries/native-answer\",\n    \"include/native-answer.h\",\n    \"data/message.txt\"\n  ],\n  \"depends\": [],\n  \"build-depends\": [],\n  \"test-depends\": []\n}\n",
+      "sha256": "2de0fa2e420109b6cdb3cf9ead41b2dbc7fe7b21bfb15a0c2f29ae6b9d54aa79"
+    }
+  },
+  "purifier": "zef",
+  "toolVersions": {
+    "gcc": "16.2.0",
+    "rakudo": "2026.07",
+    "sdk": "ca8db54fd582d7525f622dba3a80f7bd96f97992b48afa91ddd2ce549bfcfe4c",
+    "zef": "1.1.3"
+  },
+  "version": 1
+}

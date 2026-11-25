@@ -1,5 +1,39 @@
 # zef-purifier
 
+## Declared native resources
+
+The default project installer retains `lib` and the original `META6.json`, and
+also copies resources declared by the native SDK. `Distribution::Path` supplies
+the resource mapping, including platform library names. Resource names and
+source metadata are preserved. An explicit `installCommand` keeps its existing
+custom behavior.
+
+Opt in to native resource projections with explicit selectors:
+
+```nix
+built = pkgs.zef-purifier.buildZefProject {
+  src = ./project;
+  nativeLibraries.answer = {
+    resource = "libraries/native-answer";
+    library = "resources/libraries/libnative-answer.so";
+    header = "resources/include/native-answer.h";
+    exports = [ "native_answer" ];
+  };
+};
+```
+
+`resource` is the original logical `META6` resource key. `library` is its actual
+native artifact path, checked against the SDK's mapping at build time. The
+optional header must also be a declared resource. This keeps selection known
+without reading generated metadata during Nix evaluation. Callable symbols,
+native architecture, source/installed bytes, physical ownership and loader
+dependencies are checked before exposing `built.projections.native`,
+`python-ffi` and `java-ffi`. Signatures and initialization remain caller owned.
+
+This exports native libraries already produced as package resources; it does
+not turn Raku code into C functions. The native resource needs a compatible
+Nix runtime and C ABI. The current native platforms are x86_64 and aarch64 Linux.
+
 Locked, Nix-resolved dependencies for Raku and zef.
 
 ## Quickstart
