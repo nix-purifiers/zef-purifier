@@ -8,7 +8,7 @@ import struct
 import subprocess
 import sys
 
-source, output, metadata, specifications, nm, system = sys.argv[1:]
+source, output, metadata, specifications, nm, system, original_inputs = sys.argv[1:]
 source, output = Path(source).resolve(), Path(output).resolve()
 meta = json.loads(Path(metadata).read_text())
 specs = json.loads(Path(specifications).read_text())
@@ -46,5 +46,14 @@ for name, spec in specs.items():
                      "nativeResourceKey": key}
 support = output / "nix-support/zef-native"
 support.mkdir(parents=True, exist_ok=True)
-(support / "verified-resources.json").write_text(json.dumps({"sdkMetadata": meta, "libraries": records},
+authored = {}
+after_build = {}
+for original in sorted(Path(original_inputs).rglob("*")):
+    if original.is_file():
+        relative = original.relative_to(original_inputs)
+        authored[str(relative)] = hashlib.sha256(original.read_bytes()).hexdigest()
+        current = source / relative
+        after_build[str(relative)] = hashlib.sha256(current.read_bytes()).hexdigest() if current.is_file() else None
+(support / "verified-resources.json").write_text(json.dumps({"sdkMetadata": meta, "libraries": records,
+                                                           "authoredInputs": authored, "postBuildInputs": after_build},
                                                           sort_keys=True, indent=2) + "\n")

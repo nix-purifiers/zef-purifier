@@ -115,7 +115,7 @@ let
         ${lib.optionalString (nativeLibraries != { }) ''
           cmp META6.json "$out/META6.json"
           ${python3}/bin/python3 ${./verify-native-resources.py} "$PWD" "$out" \
-            "$TMPDIR/zef-native-metadata.json" ${specifications} ${binutils}/bin/nm ${stdenv.hostPlatform.system}
+            "$TMPDIR/zef-native-metadata.json" ${specifications} ${binutils}/bin/nm ${stdenv.hostPlatform.system} ${source}
         ''}
       '';
   projections = lib.optionalAttrs (nativeLibraries != { }) (
